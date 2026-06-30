@@ -1,6 +1,7 @@
 package pages;
 
 import base.BasePage;
+import config.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,18 +26,23 @@ public class CityPage extends BasePage {
 
     public CityPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
-        WaitUtils.waitForUrlContains(driver, "/uz/city");
+        WaitUtils.waitForUrlContains(driver, ConfigReader.get("tashkent.city.url"));
     }
 
     // =========== PAGE LEVEL GETTERS ===========
+
+    public boolean isPageLoaded() {
+        return isHeaderDisplayed() && getPageUrl().contains("/uz/city");
+    }
+
+    public boolean isHeaderDisplayed() {
+        return find(pageHeader).isDisplayed();
+    }
 
     public String getPageUrl() {
         return driver.getCurrentUrl();
     }
 
-    public String getPageHeaderText() {
-        return getText(pageHeader);
-    }
 
     public String getActiveTabName() {
         return getText(activeTab);

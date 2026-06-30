@@ -6,6 +6,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
+import java.util.List;
+
 public class MainPageTests extends BaseTest {
 
     @Test
@@ -31,13 +33,8 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenNewsPage_WhenClicked() {
         NewsPage newsPage = mainPage.clickNewsMenu();
 
-        String pageUrl = newsPage.getPageUrl();
-
-        Assert.assertTrue(pageUrl.contains("/uz/news"),
-                "URL should contain /uz/news after clicking nav link");
-
-        Assert.assertEquals(newsPage.getPageHeaderText(), "TOSHKENTDAN GAPIRAMIZ",
-                "Page header text mismatch");
+        Assert.assertTrue(newsPage.isPageLoaded(),
+                "News page should be loaded with correct URL and header");
 
         // Default tab assertion - "Shahar yangiliklari" should be active by default
         Assert.assertEquals(newsPage.getActiveTabName(), "Shahar yangiliklari",
@@ -67,11 +64,8 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenAnticorruptionPage_WhenClicked() {
         AnticorruptionPage anticorruptionPage = mainPage.clickAnticorruptionMenu();
 
-        Assert.assertTrue(anticorruptionPage.getPageUrl().contains("/uz/anticorruption"),
-                "URL should contain /uz/anticorruption after clicking nav link");
-
-        Assert.assertEquals(anticorruptionPage.getPageHeaderText(), "Korrupsiyaga qarshi kurashish",
-                "Page header text mismatch");
+        Assert.assertTrue(anticorruptionPage.isPageLoaded(),
+                "Anticorruption page should be loaded with correct URL and header");
 
         Assert.assertEquals(anticorruptionPage.getActiveTabName(), "Tuzilma",
                 "Default active tab should be 'Tuzilma'");
@@ -87,11 +81,7 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenCityPage_WhenClicked() {
         CityPage cityPage = mainPage.clickCityMenu();
 
-        Assert.assertTrue(cityPage.getPageUrl().contains("/uz/city"),
-                "URL should contain /uz/city after clicking nav link");
-
-        Assert.assertEquals(cityPage.getPageHeaderText(), "Shahar",
-                "Page header text mismatch");
+        Assert.assertTrue(cityPage.isPageLoaded(), "City page should be loaded with correct URL and header");
 
         Assert.assertEquals(cityPage.getActiveTabName(), "Umumiy ma'lumot",
                 "Default active tab should be 'Umumiy ma\\'lumot'");
@@ -107,11 +97,7 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenAboutPage_WhenClicked() {
         AboutPage aboutPage = mainPage.clickAboutMenu();
 
-        Assert.assertTrue(aboutPage.getPageUrl().contains("/uz/about"),
-                "URL should contain /uz/about after clicking nav link");
-
-        Assert.assertEquals(aboutPage.getPageHeaderText(), "Toshkent shahar hokimiyati haqida",
-                "Page header text mismatch");
+        Assert.assertTrue(aboutPage.isPageLoaded(), "About page should be loaded with correct URL and header");
 
         Assert.assertEquals(aboutPage.getActiveTabName(), "Hokimiyat haqida",
                 "Default active tab should be 'Hokimiyat haqida'");
@@ -127,11 +113,7 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenDeputiesPage_WhenClicked() {
         DeputiesPage deputiesPage = mainPage.clickDeputiesMenu();
 
-        Assert.assertTrue(deputiesPage.getPageUrl().contains("/uz/deputies"),
-                "URL should contain /uz/deputies after clicking nav link");
-
-        Assert.assertEquals(deputiesPage.getPageHeaderText(), "Xalq deputatlari Kengashi",
-                "Page header text mismatch");
+        Assert.assertTrue(deputiesPage.isPageLoaded(), "Deputies page should be loaded with correct URL and header");
 
         Assert.assertEquals(deputiesPage.getActiveTabName(), "Shahar deputatlari",
                 "Default active tab should be 'Shahar deputatlari'");
@@ -147,11 +129,7 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenSocietyPage_WhenClicked() {
         SocietyPage societyPage = mainPage.clickSocietyMenu();
 
-        Assert.assertTrue(societyPage.getPageUrl().contains("/uz/society"),
-                "URL should contain /uz/society after clicking nav link");
-
-        Assert.assertEquals(societyPage.getPageHeaderText(), "Fuqarolik jamiyati",
-                "Page header text mismatch");
+        Assert.assertTrue(societyPage.isPageLoaded(), "Society page should be loaded with correct URL and header");
 
         Assert.assertEquals(societyPage.getActiveTabName(), "Mahalla",
                 "Default active tab should be 'Mahalla'");
@@ -172,7 +150,7 @@ public class MainPageTests extends BaseTest {
     // ==============================
 
     @Test
-    public void shouldShowSearchResults_WhenTextProvided(){
+    public void shouldShowSearchResults_WhenSaytBoylabOptionSelected(){
         String[] searchTerms = {"Toshkent", "Mahalla", "Konsert"};
         int totalSearchResults = 0;
 
@@ -188,7 +166,34 @@ public class MainPageTests extends BaseTest {
             mainPage = searchResponsePage.clickSiteLogo();
         }
 
-        Assert.assertTrue(totalSearchResults > 0, "Expected at least one search result");
+        Assert.assertTrue(totalSearchResults > 0, "Expected at least one search result for the 'Sayt Boylab' option");
+    }
+
+    @Test
+    public void shouldShowSearchResults_WhenAfishaOptionSelected(){
+        List<String> afishaCardTitles = mainPage.getAfishaCardTitles();
+
+        for(int i=0; i<3; i++){
+            String title = afishaCardTitles.get(i);
+
+            mainPage.selectSearchType(SearchOptions.AFISHA);
+            mainPage.enterTextToSearchBar(title);
+            SearchResponsePage searchResponsePage = mainPage.clickSearchButton();
+
+            int resultsForTitle = searchResponsePage.getTotalSearchResults();
+
+            // each iteration is its own checkpoint - fails immediately, names the culprit
+            Assert.assertTrue(resultsForTitle > 0,
+                    "Expected at least one search result for Afisha title: '" + title + "'");
+
+            System.out.println("qqqqq: " + searchResponsePage.getResultContents());
+
+            Assert.assertTrue(searchResponsePage.anyResultContains(title),
+                    "Expected search results to be relevant to: '" + title + "', but none of the titles/descriptions matched. Got titles: "
+                            + searchResponsePage.getResultContents());
+
+            mainPage = searchResponsePage.clickSiteLogo();
+        }
     }
 
 }

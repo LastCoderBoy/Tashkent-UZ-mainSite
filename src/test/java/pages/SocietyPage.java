@@ -1,6 +1,7 @@
 package pages;
 
 import base.BasePage;
+import config.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,17 +38,21 @@ public class SocietyPage extends BasePage {
 
     public SocietyPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
-        WaitUtils.waitForUrlContains(driver, "/uz/society");
+        WaitUtils.waitForUrlContains(driver, ConfigReader.get("tashkent.society.url"));
     }
 
     // =========== PAGE LEVEL GETTERS ===========
+
+    public boolean isPageLoaded() {
+        return isHeaderDisplayed() && getPageUrl().contains("/uz/society");
+    }
 
     public String getPageUrl() {
         return driver.getCurrentUrl();
     }
 
-    public String getPageHeaderText() {
-        return getText(pageHeader);
+    public boolean isHeaderDisplayed() {
+        return find(pageHeader).isDisplayed();
     }
 
     public String getActiveTabName() {

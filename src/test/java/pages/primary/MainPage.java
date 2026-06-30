@@ -8,10 +8,12 @@ import org.openqa.selenium.WebDriver;
 import pages.*;
 import util.JavaScriptUtil;
 
+import java.util.List;
+
 public class MainPage extends BasePage {
 
     // TODO: fields to absorb html:
-    // search option : languages dropdown
+    // languages dropdown
     // "Ma'lumotnoma" section
     // "Salom Toshkent" section: "Afisha" section
     // "Geografik Portal" section
@@ -19,13 +21,17 @@ public class MainPage extends BasePage {
     private final By searchInput = By.id("q");
     private final By searchButton = By.xpath("//button[@type='submit' and @aria-label='Qidirish']");
     private final By searchDropdown = By.id("type");
-
+    private final By afishaCards = By.xpath("//div[contains(@class, 'styles_afisha-card__7CQD_')]//a[@class='styles_title__sKnEi']");
+    private final By newsViewMoreButton = By.xpath("//a[@href='/uz/news'][contains(text(),'Hammasini ko‘rish')]");
+    private final By tashkentShowsViewMoreButton = By.xpath("//a[@href='/uz/news/tashkent-shows'][contains(text(),'Hammasini ko‘rish')]");
 
     public MainPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
     }
 
-    // ========== NAVBAR CLICKS ==========
+    // ====================================
+    //          NAVBAR SECTION
+    //=====================================
 
     public KnowYourDistrictPage clickKnowYourDistrictMenu() {
         click(getNavLocator(NavLink.DISTRICTS));
@@ -68,25 +74,64 @@ public class MainPage extends BasePage {
     }
 
 
-    // ================= SEARCH BAR =================
+    // ====================================
+    //             SEARCH BAR
+    //=====================================
 
     public void enterTextToSearchBar(String textToSearch) {
+        jsUtil.scrollToElementJS(searchInput);
         set(searchInput, textToSearch);
     }
 
     public SearchResponsePage clickSearchButton() {
+        jsUtil.scrollToElementJS(searchButton);
         click(searchButton);
         return new SearchResponsePage(driver, jsUtil);
     }
 
     public void selectSearchType(SearchOptions type) {
+        jsUtil.scrollToElementJS(searchDropdown);
         click(searchDropdown);
         By optionLocator = getSearchOptionLocator(type.getValue());
         click(optionLocator);
     }
 
+    // ====================================
+    //          VIEW MORE BUTTONS
+    //=====================================
 
-    // ================= PRIVATE METHODS =================
+    public NewsPage clickNewsViewMoreButton() {
+        jsUtil.scrollToElementJS(newsViewMoreButton);
+        click(newsViewMoreButton);
+        return new NewsPage(driver, jsUtil);
+    }
+
+    public TashkentShowsPage clickTashkentShowsViewMoreButton() {
+        jsUtil.scrollToElementJS(tashkentShowsViewMoreButton);
+        click(tashkentShowsViewMoreButton);
+        return new TashkentShowsPage(driver, jsUtil);
+    }
+
+
+
+    // ====================================
+    //          AFISHA SECTION
+    //=====================================
+
+    public List<String> getAfishaCardTitles() {
+        jsUtil.scrollToElementJS(afishaCards);
+        return findAll(afishaCards)
+                .stream()
+                .map(element -> element.getText().trim())
+                .toList();
+    }
+
+
+
+    // ====================================
+    //          PRIVATE METHODS
+    //=====================================
+
     private By getSearchOptionLocator(String optionName) {
         return By.xpath("//div[@role='option' and text()=\"" + optionName + "\"]");
     }
