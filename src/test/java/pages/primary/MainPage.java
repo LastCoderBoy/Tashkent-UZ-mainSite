@@ -164,30 +164,30 @@ public class MainPage extends BasePage {
     public void clickUyJoyService() {
         By uyJoyServiceLocator = getHelpServicesLocator("Uy-joy");
         jsUtil.scrollToElementJS(uyJoyServiceLocator);
-        click(uyJoyServiceLocator);
+        jsUtil.clickJS(uyJoyServiceLocator);
     }
 
     public void clickQaysiMahallaService() {
         By qaysiMahallaServiceLocator = getHelpServicesLocator("Qaysi mahalla");
         jsUtil.scrollToElementJS(qaysiMahallaServiceLocator);
-        click(qaysiMahallaServiceLocator);
+        jsUtil.clickJS(qaysiMahallaServiceLocator);
     }
 
     public void clickQayerdaIshlashimniBilishService() {
         By qayerdaIshlashimniBilishServiceLocator = getHelpServicesLocator("Qayerda ishlashimni bilish");
         jsUtil.scrollToElementJS(qayerdaIshlashimniBilishServiceLocator);
-        click(qayerdaIshlashimniBilishServiceLocator);
+        jsUtil.clickJS(qayerdaIshlashimniBilishServiceLocator);
     }
     public void clickAtrofimizdagiNarsalarService() {
         By atrofimizdagiNarsalarServiceLocator = getHelpServicesLocator("Atrofimizdagi narsalar");
         jsUtil.scrollToElementJS(atrofimizdagiNarsalarServiceLocator);
-        click(atrofimizdagiNarsalarServiceLocator);
+        jsUtil.clickJS(atrofimizdagiNarsalarServiceLocator);
     }
 
     public void clickPochtaIndeksService(){
         By pochtaIndeksServiceLocator = getHelpServicesLocator("Pochta indeksini aniqlash");
         jsUtil.scrollToElementJS(pochtaIndeksServiceLocator);
-        click(pochtaIndeksServiceLocator);
+        jsUtil.clickJS(pochtaIndeksServiceLocator);
     }
 
     public boolean isServiceWhichRequireMapDisplayed() {
