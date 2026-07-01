@@ -46,10 +46,6 @@ public class NewsPage extends BasePage {
         return isHeaderDisplayed() && getPageUrl().contains("/uz/news");
     }
 
-    public String getPageUrl() {
-        return driver.getCurrentUrl();
-    }
-
     public boolean isHeaderDisplayed() {
         return find(pageHeader).isDisplayed();
     }

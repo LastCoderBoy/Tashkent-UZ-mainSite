@@ -43,10 +43,6 @@ public class AboutPage extends BasePage {
         return isHeaderDisplayed() && getPageUrl().contains("/uz/about");
     }
 
-    public String getPageUrl() {
-        return driver.getCurrentUrl();
-    }
-
     public boolean isHeaderDisplayed() {
         return find(pageHeader).isDisplayed();
     }

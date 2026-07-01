@@ -24,7 +24,4 @@ public class TashkentShowsPage extends BasePage {
         return find(pageHeader).isDisplayed();
     }
 
-    public String getPageUrl(){
-        return driver.getCurrentUrl();
-    }
 }

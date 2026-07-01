@@ -12,6 +12,7 @@ import org.testng.ITestResult;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,7 +26,8 @@ public class TestListener implements ITestListener {
         if(instance instanceof BaseTest){
             WebDriver driver = ((BaseTest) instance).getDriver();
             if(driver != null){
-                captureScreenshot(driver, result.getName());
+                attachScreenshot(driver);
+                attachPageSource(driver);
             }
         }
 
@@ -68,9 +70,16 @@ public class TestListener implements ITestListener {
         }
     }
 
+    // ─── Allure attachments ─────────────────────────────────────────
+
     @Attachment(value = "Screenshot on failure", type = "image/png")
-    public byte[] attachScreenshot(WebDriver driver) {
+    private byte[] attachScreenshot(WebDriver driver) {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "Page source on failure", type = "text/html")
+    private byte[] attachPageSource(WebDriver driver) {
+        return driver.getPageSource().getBytes(StandardCharsets.UTF_8);
     }
 }
 

@@ -48,10 +48,6 @@ public class AnticorruptionPage extends BasePage {
         return isHeaderDisplayed() && getPageUrl().contains("/uz/anticorruption");
     }
 
-    public String getPageUrl() {
-        return driver.getCurrentUrl();
-    }
-
     public boolean isHeaderDisplayed() {
         return find(pageHeader).isDisplayed();
     }

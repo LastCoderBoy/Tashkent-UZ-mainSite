@@ -14,4 +14,13 @@ public class ServicesPage extends BasePage {
         super(driver, jsUtil);
         WaitUtils.waitForUrlContains(driver, ConfigReader.get("tashkent.services.url"));
     }
+
+    public boolean isPageLoaded() {
+        return isHeaderDisplayed() && getPageUrl().contains("/uz/services");
+    }
+
+    public boolean isHeaderDisplayed() {
+        return find(pageHeader).isDisplayed();
+    }
+
 }

@@ -43,4 +43,8 @@ public class BasePage {
         return WaitUtils.waitForVisible(driver, locator).getText();
     }
 
+    public String getPageUrl() {
+        return driver.getCurrentUrl();
+    }
+
 }

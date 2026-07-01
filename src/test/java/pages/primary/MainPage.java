@@ -23,6 +23,8 @@ public class MainPage extends BasePage {
     private final By searchButton = By.xpath("//button[@type='submit' and @aria-label='Qidirish']");
     private final By searchDropdown = By.id("type");
     private final By afishaCards = By.xpath("//div[contains(@class, 'styles_afisha-card__7CQD_')]//a[@class='styles_title__sKnEi']");
+    private final By popupAuthText = By.xpath("//strong[normalize-space()='Shaxsiy kabinetga kirish']");
+    private final By popupMapTitle = By.xpath("//div[@class='style_map-content__Q4dqu']//strong");
 
     public MainPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
@@ -127,10 +129,10 @@ public class MainPage extends BasePage {
         return new AfishaPage(driver, jsUtil);
     }
 
-    public SalomToshkentPage clickSalomTashkentViewMoreButton(){
-        By salomTashkentViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.salom.url"));
-        jsUtil.scrollToElementJS(salomTashkentViewMoreButton);
-        click(salomTashkentViewMoreButton);
+    public SalomToshkentPage clickSalomToshkentViewMoreButton(){
+        By salomToshkentViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.salom.url"));
+        jsUtil.scrollToElementJS(salomToshkentViewMoreButton);
+        click(salomToshkentViewMoreButton);
         return new SalomToshkentPage(driver, jsUtil);
     }
 
@@ -141,7 +143,12 @@ public class MainPage extends BasePage {
         return new ServicesPage(driver, jsUtil);
     }
 
-
+    public UsefulLinksPage clickUsefulLinksViewMoreButton(){
+        By usefulLinksViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.useful-links.url"));
+        jsUtil.scrollToElementJS(usefulLinksViewMoreButton);
+        click(usefulLinksViewMoreButton);
+        return new UsefulLinksPage(driver, jsUtil);
+    }
 
 
     // ====================================
@@ -156,11 +163,60 @@ public class MainPage extends BasePage {
                 .toList();
     }
 
+    // ====================================
+    //          SERVICES SECTION
+    //=====================================
+
+    public void clickUyJoyService() {
+        By uyJoyServiceLocator = getHelpServicesLocator("Uy-joy");
+        jsUtil.scrollToElementJS(uyJoyServiceLocator);
+        click(uyJoyServiceLocator);
+    }
+
+    public void clickQaysiMahallaService() {
+        By qaysiMahallaServiceLocator = getHelpServicesLocator("Qaysi mahalla");
+        jsUtil.scrollToElementJS(qaysiMahallaServiceLocator);
+        click(qaysiMahallaServiceLocator);
+    }
+
+    public void clickQayerdaIshlashimniBilishService() {
+        By qayerdaIshlashimniBilishServiceLocator = getHelpServicesLocator("Qayerda ishlashimni bilish");
+        jsUtil.scrollToElementJS(qayerdaIshlashimniBilishServiceLocator);
+        click(qayerdaIshlashimniBilishServiceLocator);
+    }
+    public void clickAtrofimizdagiNarsalarService() {
+        By atrofimizdagiNarsalarServiceLocator = getHelpServicesLocator("Atrofimizdagi narsalar");
+        jsUtil.scrollToElementJS(atrofimizdagiNarsalarServiceLocator);
+        click(atrofimizdagiNarsalarServiceLocator);
+    }
+
+    public void clickPochtaIndeksService(){
+        By pochtaIndeksServiceLocator = getHelpServicesLocator("Pochta indeksini aniqlash");
+        jsUtil.scrollToElementJS(pochtaIndeksServiceLocator);
+        click(pochtaIndeksServiceLocator);
+    }
+
+    public boolean isServiceWhichRequireMapDisplayed() {
+        return getText(popupMapTitle).contains("Xaritada");
+    }
+
+    // By default, auth required to use the Service, that's why the presence of authCard is checked
+    // Will be used in "Uy-Joy" and "Qayerda ishlashimni bilish"
+    public boolean isServiceWhichRequireAuthDisplayed() {
+        return find(popupAuthText).isDisplayed();
+    }
+
+
 
 
     // ====================================
     //          PRIVATE METHODS
     //=====================================
+
+    private By getHelpServicesLocator(String serviceName) {
+        return By.xpath("//section[@aria-labelledby='help-services-title']//strong[contains(text(), '" + serviceName + "')]");
+    }
+
 
     private By getSearchOptionLocator(String optionName) {
         return By.xpath("//div[@role='option' and text()=\"" + optionName + "\"]");

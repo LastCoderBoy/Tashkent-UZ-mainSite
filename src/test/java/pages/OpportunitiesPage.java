@@ -61,10 +61,6 @@ public class OpportunitiesPage extends BasePage {
         return isHeaderDisplayed() && getPageUrl().contains("/uz/opportunities");
     }
 
-    public String getPageUrl() {
-        return driver.getCurrentUrl();
-    }
-
     public boolean isHeaderDisplayed() {
         return find(pageHeader).isDisplayed();
     }

@@ -32,10 +32,6 @@ public class KnowYourDistrictPage extends BasePage {
         return find(pageHeader).isDisplayed();
     }
 
-    public String getPageUrl(){
-        return driver.getCurrentUrl();
-    }
-
     // ─── District tabs ─────────────────
 
     /**

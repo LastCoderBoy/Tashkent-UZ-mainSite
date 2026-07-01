@@ -25,10 +25,6 @@ public class SalomToshkentPage extends BasePage {
         return find(pageHeader).isDisplayed();
     }
 
-    public String getPageUrl(){
-        return driver.getCurrentUrl();
-    }
-
     public String getActiveTabName() {
         return getText(activeTab);
     }

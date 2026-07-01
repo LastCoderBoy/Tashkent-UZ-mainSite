@@ -20,10 +20,6 @@ public class AfishaPage extends BasePage {
         return isHeaderDisplayed() && getPageUrl().contains("/uz/afisha");
     }
 
-    public String getPageUrl() {
-        return driver.getCurrentUrl();
-    }
-
     public boolean isHeaderDisplayed() {
         return find(pageHeader).isDisplayed();
     }

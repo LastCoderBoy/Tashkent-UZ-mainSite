@@ -247,6 +247,7 @@ public class MainPageTests extends BaseTest {
     @Story("View More tugmalari to'g'ri sahifaga yo'naltiradi")
     @Description("Efirda Toshkent bo'limidagi 'Batafsil' tugmasi to'g'ri sahifani ochishini tekshiradi.")
     @Severity(SeverityLevel.CRITICAL)
+    @Test
     public void shouldRedirectTashkentShowsPage_WhenViewMoreButtonClicked(){
         TashkentShowsPage tashkentShowsPage = mainPage.clickTashkentShowsViewMoreButton();
         Assert.assertTrue(tashkentShowsPage.isPageLoaded(),
@@ -298,6 +299,14 @@ public class MainPageTests extends BaseTest {
                 "Services page should be loaded with correct URL and header");
     }
 
+    @Test
+    public void shouldRedirectUsefulLinksPage_WhenViewMoreButtonClicked(){
+        UsefulLinksPage usefulLinksPage = mainPage.clickUsefulLinksViewMoreButton();
+
+        Assert.assertTrue(usefulLinksPage.isPageLoaded(),
+                "Useful Apps page should be loaded with correct URL and header");
+    }
+
     // =======================================
     //      MA'LUMOTNOMA SECTION TESTS
     // =======================================
@@ -326,6 +335,21 @@ public class MainPageTests extends BaseTest {
         Assert.assertTrue(qayerdaIshlashimniBilishServicePopup, "Qayerda ishlashimni bilish service should be available");
     }
 
+    @Test
+    public void shouldAtrofimizdagiNarsalarServiceBeAvailable_WhenClicked(){
+        mainPage.clickAtrofimizdagiNarsalarService();
+        boolean atrofimizdagiNarsalarServicePopup = mainPage.isServiceWhichRequireMapDisplayed();
+
+        Assert.assertTrue(atrofimizdagiNarsalarServicePopup, "Atrofimizdagi narsalar service should be available");
+    }
+
+    @Test
+    public void shouldPochtaIndeksServiceBeAvailable_WhenClicked(){
+        mainPage.clickPochtaIndeksService();
+        boolean pochtaIndeksServicePopup = mainPage.isServiceWhichRequireMapDisplayed();
+
+        Assert.assertTrue(pochtaIndeksServicePopup, "Pochta indeks service should be available");
+    }
 
 
 }

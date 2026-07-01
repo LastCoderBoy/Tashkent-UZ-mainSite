@@ -20,10 +20,6 @@ public class TashkentListeningPage extends BasePage {
         return isHeaderDisplayed() && getPageUrl().contains("/uz/news/tashkent-listening");
     }
 
-    public String getPageUrl() {
-        return driver.getCurrentUrl();
-    }
-
     public boolean isHeaderDisplayed() {
         return find(pageHeader).isDisplayed();
     }
