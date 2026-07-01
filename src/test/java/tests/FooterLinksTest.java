@@ -20,7 +20,7 @@ public class FooterLinksTest {
                 // ─── Yangiliklar ─────────────────────────────────────────
                 {ConfigReader.get("tashkent.news.url"),                         "Yangiliklar"},
                 {ConfigReader.get("tashkent.shows.url"),                        "Efirda Toshkent"},
-                {ConfigReader.get("tashkent.news.listening.url"),               "Toshkent tinglaydi"},
+                {ConfigReader.get("tashkent.listening.url"),               "Toshkent tinglaydi"},
                 // ─── Korrupsiyaga qarshi ─────────────────────────────────
                 {ConfigReader.get("tashkent.anticorruption.url"),               "Korrupsiyaga qarshi"},
                 {ConfigReader.get("tashkent.anticorruption.articles.url"),      "Maqolalar"},

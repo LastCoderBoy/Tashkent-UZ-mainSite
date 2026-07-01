@@ -54,6 +54,10 @@ public class WaitUtils {
         getWait(driver, DEFAULT_TIMEOUT)
                 .until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
+    public static void waitForStaleness(WebDriver driver, WebElement element) {
+        getWait(driver, DEFAULT_TIMEOUT)
+                .until(ExpectedConditions.stalenessOf(element));
+    }
 
     // ─── Page / URL ───────────────────────────────────────────────
 

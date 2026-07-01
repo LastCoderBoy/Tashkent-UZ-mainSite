@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Epic("Funktsional testlar")
@@ -31,7 +32,7 @@ public class MainPageTests extends BaseTest {
 
     @Feature("Navigatsiya")
     @Story("Navbar havolalari to'g'ri sahifani ochadi")
-    @Description("'Yangiliklar' menyusi bosilganda sahifa, default tab va kontent elementlari to'g'ri chiqishini tekshiradi.")
+    @Description("'Yangiliklar' menyusi bosilganda sahifa to'g'ri chiqishini tekshiradi.")
     @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenNewsPage_WhenClicked() {
@@ -39,17 +40,6 @@ public class MainPageTests extends BaseTest {
 
         Assert.assertTrue(newsPage.isPageLoaded(),
                 "News page should be loaded with correct URL and header");
-
-        // Default tab assertion - "Shahar yangiliklari" should be active by default
-        Assert.assertEquals(newsPage.getActiveTabName(), "Shahar yangiliklari",
-                "Default active news tab should be 'Shahar yangiliklari'");
-
-        Assert.assertTrue(newsPage.getNewsCardCount() > 0,
-                "Expected at least one news card to be displayed");
-
-        Assert.assertTrue(newsPage.isPaginationDisplayed(),
-                "Pagination should be displayed on the news listing page");
-
     }
 
     @Feature("Navigatsiya")

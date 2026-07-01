@@ -13,7 +13,7 @@ public class UsefulLinksPage extends BasePage {
 
     public UsefulLinksPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
-            WaitUtils.waitForUrlContains(driver, ConfigReader.get("tashkent.useful-links.url"));
+        WaitUtils.waitForUrlContains(driver, ConfigReader.get("tashkent.useful-links.url"));
     }
 
     public boolean isPageLoaded() {

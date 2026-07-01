@@ -5,10 +5,14 @@ import config.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import util.DateUtils;
 import util.JavaScriptUtil;
 import util.WaitUtils;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
+import java.util.Objects;
 
 public class NewsPage extends BasePage {
 
@@ -21,6 +25,12 @@ public class NewsPage extends BasePage {
 
     // ─── Filters ────────────────────────────────────────────────────
     private final By datePickerInput = By.cssSelector(".datepicker input.main");
+    private final By dateRangePicker = By.cssSelector(".daterangepicker.show-calendar");
+    private final By leftMonthLabel = By.cssSelector(".drp-calendar.left th.month");
+    private final By rightMonthLabel = By.cssSelector(".drp-calendar.right th.month");
+    private final By prevMonthButton = By.cssSelector(".drp-calendar.left th.prev.available");
+    private final By nextMonthButton = By.cssSelector(".drp-calendar.right th.next.available");
+    private final By applyDateRangeButton = By.cssSelector(".drp-buttons .applyBtn");
     private final By districtFilterDropdown = By.id("react-select-district_id-input");
     private final By selectedDistrictValue = By.cssSelector(".css-1qgtt0i-singleValue");
 
@@ -108,6 +118,35 @@ public class NewsPage extends BasePage {
         click(districtFilterDropdown);
     }
 
+    // ─── Date range filter ────────────────────────────────────────────
+
+    public NewsPage applyDateRangeFilter(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("Start date must be <= end date");
+        }
+
+        click(datePickerInput);
+        find(dateRangePicker);
+
+        selectDate(startDate);
+        selectDate(endDate);
+
+        // Capture the first old news card BEFORE clicking apply
+        WebElement oldFirstCard = findAll(newsCards).get(0);
+
+        click(applyDateRangeButton);
+
+        // WAIT for the old card to be removed from the DOM (meaning the UI refreshed)
+        WaitUtils.waitForStaleness(driver, oldFirstCard);
+
+        // Wait for the new cards to be visible
+        WaitUtils.waitForVisible(driver, newsCards);
+
+        click(applyDateRangeButton);
+
+        return this;
+    }
+
 
     // ============== PAGINATION ==============
 
@@ -141,5 +180,41 @@ public class NewsPage extends BasePage {
         By locator = By.xpath(
                 "//ul[contains(@class,'rc-pagination')]//a[normalize-space()='" + pageNumber + "']");
         click(locator);
+    }
+
+    // ================= PRIVATE HELPERS =================
+
+    private void selectDate(LocalDate date) {
+        String calendarSide = ensureDateMonthIsVisible(date);
+        By dayLocator = By.xpath("//div[contains(@class,'daterangepicker') and contains(@class,'show-calendar')]"
+                + "//div[contains(@class,'drp-calendar') and contains(@class,'" + calendarSide + "')]"
+                + "//td[contains(@class,'available') and not(contains(@class,'off')) and normalize-space()='"
+                + date.getDayOfMonth() + "']");
+        click(dayLocator);
+    }
+
+    private String ensureDateMonthIsVisible(LocalDate targetDate) {
+        YearMonth targetMonth = YearMonth.from(targetDate);
+
+        for (int i = 0; i < 24; i++) {
+            YearMonth leftMonth = DateUtils.parseUzMonthYearLabel(getText(leftMonthLabel));
+            YearMonth rightMonth = DateUtils.parseUzMonthYearLabel(getText(rightMonthLabel));
+
+            if (targetMonth.equals(leftMonth)) {
+                return "left";
+            }
+            if (targetMonth.equals(rightMonth)) {
+                return "right";
+            }
+            if (targetMonth.isBefore(leftMonth)) {
+                click(prevMonthButton);
+                continue;
+            }
+            if (targetMonth.isAfter(rightMonth)) {
+                click(nextMonthButton);
+            }
+        }
+
+        throw new IllegalStateException("Target month is not visible in datepicker: " + targetDate);
     }
 }
