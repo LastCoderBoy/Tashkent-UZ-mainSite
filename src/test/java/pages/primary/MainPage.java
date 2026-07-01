@@ -13,12 +13,6 @@ import java.util.List;
 
 public class MainPage extends BasePage {
 
-    // TODO: fields to absorb html:
-    // languages dropdown
-    // "Ma'lumotnoma" section
-    // "Salom Toshkent" section: "Afisha" section
-    // "Geografik Portal" section
-
     private final By searchInput = By.id("q");
     private final By searchButton = By.xpath("//button[@type='submit' and @aria-label='Qidirish']");
     private final By searchDropdown = By.id("type");
@@ -223,7 +217,7 @@ public class MainPage extends BasePage {
     }
 
     private By getNavLocator(NavLink link){
-        return By.cssSelector("ul.d_flex li a[href*='" + link.getPath() + "']");
+        return By.cssSelector("ul[class*='d_flex'] li a[href*='" + link.getPath() + "']");
     }
 
     private By getViewMoreButtonLocator(String url){

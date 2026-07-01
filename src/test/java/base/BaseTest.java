@@ -40,7 +40,7 @@ public class BaseTest {
         ));
 
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+        driver.manage().window().setSize(new org.openqa.selenium.Dimension(1920, 1080));
         jsUtil = new JavaScriptUtil(driver);
     }
 
