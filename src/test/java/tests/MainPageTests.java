@@ -1,6 +1,12 @@
 package tests;
 
 import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import enums.SearchOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -8,8 +14,13 @@ import pages.*;
 
 import java.util.List;
 
+@Epic("Funktsional testlar")
 public class MainPageTests extends BaseTest {
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("Bosh sahifadagi 'Tumaningizni bilib oling' menyusi bosilganda mos sahifa ochilishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenKnowYourDistrictPage_WhenClicked() {
         KnowYourDistrictPage knowYourDistrictPage = mainPage.clickKnowYourDistrictMenu();
@@ -18,6 +29,10 @@ public class MainPageTests extends BaseTest {
                 "Know Your District page should be loaded with correct URL and header");
     }
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("'Yangiliklar' menyusi bosilganda sahifa, default tab va kontent elementlari to'g'ri chiqishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenNewsPage_WhenClicked() {
         NewsPage newsPage = mainPage.clickNewsMenu();
@@ -37,6 +52,10 @@ public class MainPageTests extends BaseTest {
 
     }
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("'Imkoniyatlar' menyusi bosilganda mos sahifa ochilishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenOpportunitiesPage_WhenClicked() {
         OpportunitiesPage opportunitiesPage = mainPage.clickOpportunitiesMenu();
@@ -45,6 +64,10 @@ public class MainPageTests extends BaseTest {
                 "Opportunities page should be loaded with correct URL and header");
     }
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("'Korrupsiyaga qarshi kurashish' sahifasi ochilib, asosiy bloklar ko'rinishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenAnticorruptionPage_WhenClicked() {
         AnticorruptionPage anticorruptionPage = mainPage.clickAnticorruptionMenu();
@@ -62,6 +85,10 @@ public class MainPageTests extends BaseTest {
                 "Structure image should be displayed on anticorruption page");
     }
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("'Shahar' sahifasi ochilib, default tab, tavsif bloki va rasm mavjudligini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenCityPage_WhenClicked() {
         CityPage cityPage = mainPage.clickCityMenu();
@@ -78,6 +105,10 @@ public class MainPageTests extends BaseTest {
                 "City image should be displayed on city page");
     }
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("'Hokimiyat haqida' sahifasi ochilib, asosiy tavsif va rasm bloklari ko'rinishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenAboutPage_WhenClicked() {
         AboutPage aboutPage = mainPage.clickAboutMenu();
@@ -94,6 +125,10 @@ public class MainPageTests extends BaseTest {
                 "About page image should be displayed");
     }
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("'Deputatlar' sahifasi ochilib, kartalar va pagination mavjudligini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenDeputiesPage_WhenClicked() {
         DeputiesPage deputiesPage = mainPage.clickDeputiesMenu();
@@ -110,6 +145,10 @@ public class MainPageTests extends BaseTest {
                 "Pagination should be displayed on deputies page");
     }
 
+    @Feature("Navigatsiya")
+    @Story("Navbar havolalari to'g'ri sahifani ochadi")
+    @Description("'Fuqarolik jamiyati' sahifasi ochilib, default filter va mahalla kartalari chiqishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldOpenSocietyPage_WhenClicked() {
         SocietyPage societyPage = mainPage.clickSocietyMenu();
@@ -134,6 +173,10 @@ public class MainPageTests extends BaseTest {
     //          SEARCH BAR TESTS
     // =======================================
 
+    @Feature("Qidiruv")
+    @Story("Qidiruv natijalari mos chiqadi")
+    @Description("'Sayt bo'ylab' qidiruv turi bo'yicha bir nechta so'z uchun natijalar mavjudligini tekshiradi.")
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void shouldShowSearchResults_WhenSaytBoylabOptionSelected(){
         String[] searchTerms = {"Toshkent", "Mahalla", "Konsert"};
@@ -154,6 +197,10 @@ public class MainPageTests extends BaseTest {
         Assert.assertTrue(totalSearchResults > 0, "Expected at least one search result for the 'Sayt Boylab' option");
     }
 
+    @Feature("Qidiruv")
+    @Story("Qidiruv natijalari mos chiqadi")
+    @Description("'Afisha' qidiruv turi bo'yicha tanlangan nomlar uchun natija va relevatlikni tekshiradi.")
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void shouldShowSearchResults_WhenAfishaOptionSelected(){
         List<String> afishaCardTitles = mainPage.getAfishaCardTitles();
@@ -185,6 +232,10 @@ public class MainPageTests extends BaseTest {
     //        VIEW MORE BUTTON TESTS
     // =======================================
 
+    @Feature("Navigatsiya")
+    @Story("View More tugmalari to'g'ri sahifaga yo'naltiradi")
+    @Description("Yangiliklar bo'limidagi 'Batafsil' tugmasi to'g'ri sahifani ochishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldRedirectNewsPage_WhenViewMoreButtonClicked(){
         NewsPage newsPage = mainPage.clickNewsViewMoreButton();
@@ -192,13 +243,20 @@ public class MainPageTests extends BaseTest {
                 "News page should be loaded with correct URL and header");
     }
 
-    @Test(description = "Verify that clicking the 'View More' button for Efirda Toshkent redirects to the responsible page")
+    @Feature("Navigatsiya")
+    @Story("View More tugmalari to'g'ri sahifaga yo'naltiradi")
+    @Description("Efirda Toshkent bo'limidagi 'Batafsil' tugmasi to'g'ri sahifani ochishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     public void shouldRedirectTashkentShowsPage_WhenViewMoreButtonClicked(){
         TashkentShowsPage tashkentShowsPage = mainPage.clickTashkentShowsViewMoreButton();
         Assert.assertTrue(tashkentShowsPage.isPageLoaded(),
                 "Tashkent Shows page should be loaded with correct URL and header");
     }
 
+    @Feature("Navigatsiya")
+    @Story("View More tugmalari to'g'ri sahifaga yo'naltiradi")
+    @Description("Toshkent tinglaydi bo'limidagi 'Batafsil' tugmasi to'g'ri sahifani ochishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldRedirectTashkentListeningPage_WhenViewMoreButtonClicked(){
         TashkentListeningPage tashkentListeningPage = mainPage.clickTashkentListeningViewMoreButton();
@@ -206,6 +264,10 @@ public class MainPageTests extends BaseTest {
                 "Tashkent Listening page should be loaded with correct URL and header");
     }
 
+    @Feature("Navigatsiya")
+    @Story("View More tugmalari to'g'ri sahifaga yo'naltiradi")
+    @Description("Afisha bo'limidagi 'Batafsil' tugmasi to'g'ri sahifani ochishini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     public void shouldRedirectAfishaPage_WhenViewMoreButtonClicked(){
         AfishaPage afishaPage = mainPage.clickAfishaViewMoreButton();
@@ -213,9 +275,13 @@ public class MainPageTests extends BaseTest {
                 "Afisha page should be loaded with correct URL and header");
     }
 
+    @Feature("Navigatsiya")
+    @Story("View More tugmalari to'g'ri sahifaga yo'naltiradi")
+    @Description("Salom Toshkent bo'limidagi 'Batafsil' tugmasi to'g'ri sahifani ochib, default tab holatini tekshiradi.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
-    public void shouldRedirectSalomTashkentPage_WhenViewMoreButtonClicked(){
-        SalomToshkentPage salomTashkentPage = mainPage.clickSalomTashkentViewMoreButton();
+    public void shouldRedirectSalomToshkentPage_WhenViewMoreButtonClicked(){
+        SalomToshkentPage salomTashkentPage = mainPage.clickSalomToshkentViewMoreButton();
 
         Assert.assertTrue(salomTashkentPage.isPageLoaded(),
                 "Salom Toshkent page should be loaded with correct URL and header");
@@ -224,8 +290,42 @@ public class MainPageTests extends BaseTest {
                 "Default active tab should be 'Salom Toshkent'");
     }
 
+    @Test
+    public void shouldRedirectServicesPage_WhenViewMoreButtonClicked(){
+        ServicesPage servicesPage = mainPage.clickServicesViewMoreButton();
+
+        Assert.assertTrue(servicesPage.isPageLoaded(),
+                "Services page should be loaded with correct URL and header");
+    }
+
     // =======================================
     //      MA'LUMOTNOMA SECTION TESTS
     // =======================================
+
+    @Test
+    public void shouldUyJoyServiceBeAvailable_WhenClicked(){
+        mainPage.clickUyJoyService();
+        boolean uyJoyServicePopup = mainPage.isServiceWhichRequireAuthDisplayed();
+
+        Assert.assertTrue(uyJoyServicePopup, "Uy-joy service should be available");
+    }
+
+    @Test
+    public void shouldQaysiMahallaServiceBeAvailable_WhenClicked(){
+        mainPage.clickQaysiMahallaService();
+        boolean qaysiMahallaServicePopup = mainPage.isServiceWhichRequireMapDisplayed();
+
+        Assert.assertTrue(qaysiMahallaServicePopup, "Qaysi mahalla service should be available");
+    }
+
+    @Test
+    public void shouldQayerdaIshlashimniBilishServiceBeAvailable_WhenClicked(){
+        mainPage.clickQayerdaIshlashimniBilishService();
+        boolean qayerdaIshlashimniBilishServicePopup = mainPage.isServiceWhichRequireAuthDisplayed();
+
+        Assert.assertTrue(qayerdaIshlashimniBilishServicePopup, "Qayerda ishlashimni bilish service should be available");
+    }
+
+
 
 }
