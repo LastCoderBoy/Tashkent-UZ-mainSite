@@ -1,6 +1,7 @@
 package pages.primary;
 
 import base.BasePage;
+import config.ConfigReader;
 import enums.NavLink;
 import enums.SearchOptions;
 import org.openqa.selenium.By;
@@ -22,8 +23,6 @@ public class MainPage extends BasePage {
     private final By searchButton = By.xpath("//button[@type='submit' and @aria-label='Qidirish']");
     private final By searchDropdown = By.id("type");
     private final By afishaCards = By.xpath("//div[contains(@class, 'styles_afisha-card__7CQD_')]//a[@class='styles_title__sKnEi']");
-    private final By newsViewMoreButton = By.xpath("//a[@href='/uz/news'][contains(text(),'Hammasini ko‘rish')]");
-    private final By tashkentShowsViewMoreButton = By.xpath("//a[@href='/uz/news/tashkent-shows'][contains(text(),'Hammasini ko‘rish')]");
 
     public MainPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
@@ -101,16 +100,47 @@ public class MainPage extends BasePage {
     //=====================================
 
     public NewsPage clickNewsViewMoreButton() {
+        By newsViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.news.url"));
         jsUtil.scrollToElementJS(newsViewMoreButton);
         click(newsViewMoreButton);
         return new NewsPage(driver, jsUtil);
     }
 
     public TashkentShowsPage clickTashkentShowsViewMoreButton() {
+        By tashkentShowsViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.shows.url"));
         jsUtil.scrollToElementJS(tashkentShowsViewMoreButton);
         click(tashkentShowsViewMoreButton);
         return new TashkentShowsPage(driver, jsUtil);
     }
+
+    public TashkentListeningPage clickTashkentListeningViewMoreButton() {
+        By tashkentListeningViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.listening.url"));
+        jsUtil.scrollToElementJS(tashkentListeningViewMoreButton);
+        click(tashkentListeningViewMoreButton);
+        return new TashkentListeningPage(driver, jsUtil);
+    }
+
+    public AfishaPage clickAfishaViewMoreButton() {
+        By afishaViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.afisha.url"));
+        jsUtil.scrollToElementJS(afishaViewMoreButton);
+        click(afishaViewMoreButton);
+        return new AfishaPage(driver, jsUtil);
+    }
+
+    public SalomToshkentPage clickSalomTashkentViewMoreButton(){
+        By salomTashkentViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.salom.url"));
+        jsUtil.scrollToElementJS(salomTashkentViewMoreButton);
+        click(salomTashkentViewMoreButton);
+        return new SalomToshkentPage(driver, jsUtil);
+    }
+
+    public ServicesPage clickServicesViewMoreButton(){
+        By servicesViewMoreButton = getViewMoreButtonLocator(ConfigReader.get("tashkent.services.url"));
+        jsUtil.scrollToElementJS(servicesViewMoreButton);
+        click(servicesViewMoreButton);
+        return new ServicesPage(driver, jsUtil);
+    }
+
 
 
 
@@ -138,5 +168,9 @@ public class MainPage extends BasePage {
 
     private By getNavLocator(NavLink link){
         return By.cssSelector("ul.d_flex li a[href*='" + link.getPath() + "']");
+    }
+
+    private By getViewMoreButtonLocator(String url){
+        return By.xpath("//a[@href='" + url + "'][contains(text(),'Hammasini ko‘rish')]");
     }
 }

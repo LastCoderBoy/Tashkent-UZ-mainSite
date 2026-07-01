@@ -116,7 +116,11 @@ public class NewsPage extends BasePage {
     // ============== PAGINATION ==============
 
     public boolean isPaginationDisplayed() {
-        return !findAll(paginationContainer).isEmpty();
+        try {
+            return find(paginationContainer).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public int getVisiblePaginationItemCount() {

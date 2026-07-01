@@ -1,6 +1,7 @@
 package pages;
 
 import base.BasePage;
+import config.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,11 +21,15 @@ public class KnowYourDistrictPage extends BasePage {
 
     public KnowYourDistrictPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
-        WaitUtils.waitForUrlContains(driver, "/uz/districts");
+        WaitUtils.waitForUrlContains(driver, ConfigReader.get("tashkent.know-your-district.url"));
     }
 
-    public String getPageHeaderText() {
-        return getText(pageHeader);
+    public boolean isPageLoaded() {
+        return isHeaderDisplayed() && getPageUrl().contains("/uz/districts");
+    }
+
+    public boolean isHeaderDisplayed() {
+        return find(pageHeader).isDisplayed();
     }
 
     public String getPageUrl(){

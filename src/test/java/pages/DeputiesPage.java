@@ -107,7 +107,7 @@ public class DeputiesPage extends BasePage {
     // =========== PAGINATION ===========
 
     public boolean isPaginationDisplayed() {
-        return !findAll(paginationContainer).isEmpty();
+        return find(paginationContainer).isDisplayed();
     }
 
     public int getVisiblePaginationItemCount() {

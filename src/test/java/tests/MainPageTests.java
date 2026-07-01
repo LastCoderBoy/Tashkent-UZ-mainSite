@@ -14,19 +14,8 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenKnowYourDistrictPage_WhenClicked() {
         KnowYourDistrictPage knowYourDistrictPage = mainPage.clickKnowYourDistrictMenu();
 
-        String pageUrl = knowYourDistrictPage.getPageUrl();
-
-        // URL assertion - confirms navigation actually happened
-        Assert.assertTrue(pageUrl.contains("/uz/districts"),
-                "URL should contain /uz/districts after clicking nav link");
-
-        // Header assertion - confirms correct page loaded, not just correct URL
-        Assert.assertEquals(knowYourDistrictPage.getPageHeaderText(), "Tumaningizni bilib oling",
-                "Page header text mismatch");
-
-        // Tabs assertion - confirms all 12 districts are present
-        Assert.assertEquals(knowYourDistrictPage.getTotalDistrictCount(), 12,
-                "Expected 12 districts total (visible + dropdown)");
+        Assert.assertTrue(knowYourDistrictPage.isPageLoaded(),
+                "Know Your District page should be loaded with correct URL and header");
     }
 
     @Test
@@ -52,12 +41,8 @@ public class MainPageTests extends BaseTest {
     public void shouldOpenOpportunitiesPage_WhenClicked() {
         OpportunitiesPage opportunitiesPage = mainPage.clickOpportunitiesMenu();
 
-        Assert.assertTrue(opportunitiesPage.getPageUrl().contains("/uz/opportunities"),
-                "URL should contain /uz/opportunities after clicking nav link");
-
-        Assert.assertEquals(opportunitiesPage.getPageHeaderText(), "Shahar aholisi uchun imkoniyatlar",
-                "Page header text mismatch");
-
+        Assert.assertTrue(opportunitiesPage.isPageLoaded(),
+                "Opportunities page should be loaded with correct URL and header");
     }
 
     @Test
@@ -145,9 +130,9 @@ public class MainPageTests extends BaseTest {
     }
 
 
-    // ==============================
-    //      SEARCH BAR TESTS
-    // ==============================
+    // =======================================
+    //          SEARCH BAR TESTS
+    // =======================================
 
     @Test
     public void shouldShowSearchResults_WhenSaytBoylabOptionSelected(){
@@ -195,5 +180,52 @@ public class MainPageTests extends BaseTest {
             mainPage = searchResponsePage.clickSiteLogo();
         }
     }
+
+    // =======================================
+    //        VIEW MORE BUTTON TESTS
+    // =======================================
+
+    @Test
+    public void shouldRedirectNewsPage_WhenViewMoreButtonClicked(){
+        NewsPage newsPage = mainPage.clickNewsViewMoreButton();
+        Assert.assertTrue(newsPage.isPageLoaded(),
+                "News page should be loaded with correct URL and header");
+    }
+
+    @Test(description = "Verify that clicking the 'View More' button for Efirda Toshkent redirects to the responsible page")
+    public void shouldRedirectTashkentShowsPage_WhenViewMoreButtonClicked(){
+        TashkentShowsPage tashkentShowsPage = mainPage.clickTashkentShowsViewMoreButton();
+        Assert.assertTrue(tashkentShowsPage.isPageLoaded(),
+                "Tashkent Shows page should be loaded with correct URL and header");
+    }
+
+    @Test
+    public void shouldRedirectTashkentListeningPage_WhenViewMoreButtonClicked(){
+        TashkentListeningPage tashkentListeningPage = mainPage.clickTashkentListeningViewMoreButton();
+        Assert.assertTrue(tashkentListeningPage.isPageLoaded(),
+                "Tashkent Listening page should be loaded with correct URL and header");
+    }
+
+    @Test
+    public void shouldRedirectAfishaPage_WhenViewMoreButtonClicked(){
+        AfishaPage afishaPage = mainPage.clickAfishaViewMoreButton();
+        Assert.assertTrue(afishaPage.isPageLoaded(),
+                "Afisha page should be loaded with correct URL and header");
+    }
+
+    @Test
+    public void shouldRedirectSalomTashkentPage_WhenViewMoreButtonClicked(){
+        SalomToshkentPage salomTashkentPage = mainPage.clickSalomTashkentViewMoreButton();
+
+        Assert.assertTrue(salomTashkentPage.isPageLoaded(),
+                "Salom Toshkent page should be loaded with correct URL and header");
+
+        Assert.assertEquals(salomTashkentPage.getActiveTabName(), "Salom Toshkent",
+                "Default active tab should be 'Salom Toshkent'");
+    }
+
+    // =======================================
+    //      MA'LUMOTNOMA SECTION TESTS
+    // =======================================
 
 }

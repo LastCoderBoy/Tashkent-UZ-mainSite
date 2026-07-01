@@ -9,7 +9,7 @@ import util.WaitUtils;
 
 public class TashkentShowsPage extends BasePage {
 
-    private final By pageHeader = By.xpath("(//h1 //span[contains(text(),'Efirda Toshkent')])");
+    private final By pageHeader = By.xpath("//h1/span[text()='Efirda Toshkent']");
 
     public TashkentShowsPage(WebDriver driver, JavaScriptUtil jsUtil) {
         super(driver, jsUtil);
